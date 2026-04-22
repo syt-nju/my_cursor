@@ -7,6 +7,11 @@
 ## 输入输出
 - **输入**：URL / markdown 路径 / 粘贴文本（URL 优先用 Read 或 WebFetch 拉全文）
 - **输出**：单个 HTML 文件，无外部构建依赖（字体用 CDN，图标用 emoji 或内联 SVG）
+- **源链接**：如果输入提供了原文 URL（或文内可提取到权威源链接），HTML 必须显式引用：
+  - 页头或 TL;DR 附近放一个指向原文的「阅读原文 / Source」链接
+  - 页脚再出现一次，附作者 / 站点名（若已知）
+  - 如果文中引用了其他外链资源，也保留跳转
+  - 参考样式：[anthropic-multi-agent-research-system](https://syt-nju.github.io/files/visual-reading/anthropic-multi-agent-research-system/) —— 顶部导航带「原文 ↗」，页脚再列一次「原文：标题 · 站点」
 
 ---
 
