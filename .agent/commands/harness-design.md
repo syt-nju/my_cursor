@@ -34,6 +34,7 @@ Rules:
 - Before editing this file, restate the proposed requirement changes and get explicit user confirmation.
 - Keep each feature testable and implementation-independent.
 - Mark uncertainty as open questions instead of inventing answers.
+- **Keep the feature list lean. Do not split a single requirement into many fine-grained features.** Every feature must map directly to a real user need stated or confirmed by the user; if a candidate feature is not tightly tied to the requirements, drop it instead of inventing scope. When in doubt, prefer fewer, larger features over many small ones, and ask the user before adding a feature whose value is unclear.
 
 Writing guidance:
 
