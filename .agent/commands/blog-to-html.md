@@ -141,7 +141,7 @@ rg "(title|body|hint|example|label|text):\s*'[^']*'[^']*'" <file>
 
 - 浏览器打开让用户确认
 - 列 2–3 个可迭代方向，不主动写 README
-- 顺手起一个本地 server 方便阅读，例如在 HTML 所在目录执行 `python3 -m http.server 8000`，把访问地址告诉用户
+- 顺手起一个本地 server 方便阅读，例如在 HTML 所在目录执行 `python3 -m http.server 8000`，把访问地址告诉用户，需要给用户具体ip下的地址而不是localhost
 
 ---
 
