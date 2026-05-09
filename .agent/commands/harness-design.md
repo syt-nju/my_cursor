@@ -10,6 +10,19 @@ The command manages three markdown files by default:
 
 Use these filenames unless the user explicitly asks for different names or the repository already has equivalent docs. If equivalent docs exist, confirm the mapping once, then use that mapping consistently for the rest of the session.
 
+## Required Skill: karparthy-guideline
+
+This command MUST follow the `karparthy-guideline` skill (`.cursor/skills/karparthy-guideline/SKILL.md`) throughout every phase: requirements gathering, framework design, implementation, and verification. Read the skill on entry and keep its principles active.
+
+Apply it as follows:
+
+- **Think before coding**: surface assumptions and tradeoffs in Design Mode instead of inventing answers; ask the user when intent is unclear.
+- **Simplicity first**: keep features, architecture, tasks, and code minimum-viable. No speculative scope, no abstractions for single-use code, no flexibility that was not requested.
+- **Surgical changes**: every edit must trace directly to a confirmed feature. Do not "improve" adjacent code, refactor unrelated areas, or change style.
+- **Goal-driven execution**: convert each feature into verifiable acceptance criteria before implementing, and loop until those criteria are met.
+
+Feature verification (the **Subagent Verification** step below) must explicitly check the implementation against these principles, not just functional correctness. If an implementation passes acceptance criteria but violates karparthy-guideline (overcomplicated, speculative, or out-of-scope edits), treat it as a verification failure and iterate.
+
 ## Operating Modes
 
 1. **Design Mode** - use when the requirements doc or framework-design doc is missing, empty, or only contains placeholders. Goal: converge on confirmed requirements and a lightweight architecture.
@@ -137,6 +150,14 @@ Ask the subagent to report:
 - observed behavior versus expected behavior
 - bugs, risks, or surprising side effects
 - minimal reproduction steps for any failure
+- **karparthy-guideline violations** (see below). Treat any clear violation as a fail or partial, even when functional behavior matches the acceptance criteria.
+
+karparthy-guideline checks the verifier must perform on the changed code:
+
+- **Simplicity**: is the implementation the minimum code that satisfies the acceptance criteria? Flag speculative features, unused configurability, premature abstraction, or 200 lines where 50 would do.
+- **Surgical scope**: does every changed line trace to this feature? Flag drive-by refactors, unrelated style or comment changes, or edits to files that did not need to change.
+- **No silent assumptions**: are non-obvious decisions documented or, if uncertain, raised as open questions? Flag unstated assumptions that affect behavior.
+- **Cleanup discipline**: are imports, variables, and helpers that this change orphaned removed? Pre-existing dead code should not be deleted.
 
 Example prompt:
 
@@ -149,7 +170,15 @@ You may read the repository and run these checks:
 
 <commands>
 
-Do not modify files. Exercise the feature from the user's point of view and avoid relying on implementation details. Report pass/fail, commands run, observed versus expected behavior, and any bugs or risks.
+Do not modify files. Exercise the feature from the user's point of view and avoid relying on implementation details.
+
+Also review the changed code against the karparthy-guideline skill (`.cursor/skills/karparthy-guideline/SKILL.md`). Specifically check:
+- Simplicity: minimum code, no speculative scope or unused abstractions.
+- Surgical scope: every changed line traces to this feature; no drive-by refactors or unrelated edits.
+- Surfaced assumptions: non-obvious decisions are documented or raised as open questions.
+- Cleanup: imports/helpers orphaned by this change are removed; pre-existing dead code is left alone.
+
+Report pass/fail/partial, commands run, observed versus expected behavior, any bugs or risks, and any karparthy-guideline violations (with file and line references). Treat clear violations as fail or partial even if functional behavior matches.
 ```
 
 ### Commit Rules
