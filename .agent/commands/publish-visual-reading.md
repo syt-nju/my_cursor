@@ -88,7 +88,20 @@ python3 -c "import yaml,sys; yaml.safe_load(open('syt-nju.github.io/_data/visual
 失败则回到第 3 步修正。
 
 ### 5. 提交并推送
-在 `syt-nju.github.io/` 内执行：
+
+**原则**：一次 publish 只发一篇，commit 里只能含本篇相关改动（`files/visual-reading/<slug>/` + `_data/visual_reading.yml`）。
+
+先在 `syt-nju.github.io/` 内跑 `git status`，根据情况分支：
+
+**情况 A：工作区干净，只有本次新增/修改的文件** — 直接走下面的 add/commit/push。
+
+**情况 B：检测到其他无关改动**（别的目录的修改、其他人/其他任务留下的 staged 或 unstaged 变更） — **不要**把它们一起 add 进来，也不要替用户判断要不要带上。用 stash 隔离干净再发：
+```bash
+git stash push -u -m "pre-publish-<slug>"   # -u 一并暂存 untracked
+```
+stash 后再次 `git status` 确认工作区干净，然后把准备好的 HTML 和 YAML 改动重新落地（第 2、3 步的产物如果被 stash 一起带走了，需要重新执行；通常这两个文件就是本次要发布的内容，stash 时会被一起收走，pop 之后再做 add 也可以——更稳妥的做法是**先完成 stash 再做第 2、3 步**，把发布动作和无关改动彻底分开）。
+
+接着：
 ```bash
 git add files/visual-reading/<slug>/ _data/visual_reading.yml
 git status
@@ -99,6 +112,12 @@ git commit -m "visual-reading: add <slug>"
 git push
 ```
 若 `git push` 被拒绝（远端有新提交），按 `.cursor/commands/git-push.md` 的方式 `git pull --rebase && git push`。
+
+push 成功后，恢复之前暂存的无关改动：
+```bash
+git stash pop
+```
+若 pop 出现冲突，停下来告知用户冲突文件，**不要**自行 resolve 别人的工作。
 
 ### 6. 交付
 给用户：
@@ -121,3 +140,4 @@ git push
 4. **不校验 YAML 就 push**：解析失败会让 `/visual-reading/` 整页构建失败。第 4 步必跑。
 5. **标题照搬原文标题**：列表页只靠标题撑信息量，原文标题通常太抽象或太谦逊（"我们如何构建 X"），转述成带主语锚点和具体对象的版本（"Anthropic 怎么构建 multi-agent research system"）。
 6. **加回 summary 字段**：之前试过用 summary 做副标题，视觉上抢戏、写起来也容易空话。方案已废弃；信息全部压进 title。
+7. **把无关改动一起 commit**：publish 是单篇粒度的操作，commit message 也是 `visual-reading: add <slug>`。检测到其他改动必须 `git stash push -u` 隔离，发布完再 `git stash pop`，不要图省事一起带上。
