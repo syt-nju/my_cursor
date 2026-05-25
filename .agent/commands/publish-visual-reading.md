@@ -38,6 +38,7 @@
 ```bash
 mkdir -p syt-nju.github.io/files/visual-reading/<slug>
 cp <html_path> syt-nju.github.io/files/visual-reading/<slug>/index.html
+rm <html_path>
 ```
 
 ### 3. 在 `_data/visual_reading.yml` 顶部插入一条
