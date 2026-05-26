@@ -43,6 +43,7 @@ Skills are loaded on demand. Both Cursor (skills browser) and Claude Code (plugi
 | `deepxiv-trending-digest` | Digest recent hot papers |
 | `hugging-face-cli` | HF Hub downloads, uploads, and compute jobs |
 | `pdf` | Read, merge, split, OCR PDF files |
+| `pptx` | Create, edit, or modify PowerPoint presentations and templates |
 
 ### Software Engineering Lifecycle
 | Skill | When to use |
