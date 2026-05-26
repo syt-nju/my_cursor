@@ -1,13 +1,26 @@
 # my_cursor
 
-This repository stores my reusable Cursor assets, including commands, skills, agents, and rules.
+This repository stores reusable agent assets for Cursor and Claude.
+
+The shared source of truth is `.agent`. Tool-specific directories should be thin entrypoints into that shared content:
+
+- `.cursor -> .agent` for Cursor
+- `.claude -> .agent` for Claude
+
+Shared content belongs in `.agent` by default. Only platform-specific registration files and hook adapters should diverge.
 
 ## Structure
 
-- `.cursor/commands`: reusable command prompts
-- `.cursor/skills`: reusable skills and supporting references
-- `.cursor/agents`: agent-related configuration
-- `.cursor/rules`: project rules and coding conventions
+- `.agent/commands`: slash commands (spec, plan, build, test, code-review, code-simplify, git, papers, …)
+- `.agent/skills`: skill SKILL.md files — research workflow + full software engineering lifecycle
+- `.agent/agents`: agent persona definitions (code-reviewer, security-auditor, test-engineer)
+- `.agent/rules`: always-on rules and coding conventions
+- `.agent/references`: checklist references linked from skills (testing, security, performance, accessibility)
+- `.agent/hooks/core`: shared hook business logic (sdd-cache, simplify-ignore)
+- `.agent/hooks.json`: Cursor hook registration (read as `.cursor/hooks.json`)
+- `.agent/settings.json`: Claude hook/settings registration (read as `.claude/settings.json`)
+
+See `.agent/README.md` for the full skill index, command list, and hook architecture.
 
 ## DeepXiv Skills Setup
 

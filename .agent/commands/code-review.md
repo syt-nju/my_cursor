@@ -1,5 +1,7 @@
 # Code Review
 
+> Follow the `code-review-and-quality` skill (`.agent/skills/code-review-and-quality/SKILL.md`) for the five-axis review framework (correctness, readability, architecture, security, performance) and categorized findings (Critical / Important / Suggestion).
+
 ## Overview
 
 Perform a thorough code review that verifies functionality, maintainability, and

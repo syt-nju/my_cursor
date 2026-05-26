@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "matcher": "WebFetch",
+        "command": ".cursor/hooks/core/sdd-cache-pre.sh",
+        "timeout": 10
+      }
+    ],
+    "postToolUse": [
+      {
+        "matcher": "WebFetch",
+        "command": ".cursor/hooks/core/sdd-cache-post.sh",
+        "timeout": 10
+      }
+    ]
+  }
+}
